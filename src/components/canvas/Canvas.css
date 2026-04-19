@@ -1,0 +1,109 @@
+.canvas-wrapper {
+  flex: 1;
+  position: relative;
+  background: var(--canvas-bg);
+  outline: none;
+}
+
+.canvas-wrapper .react-flow__edge-path {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.canvas-wrapper .react-flow__edge.selected .react-flow__edge-path {
+  stroke: color-mix(in srgb, var(--accent) 70%, white);
+  stroke-width: 2.5;
+}
+
+.canvas-wrapper .react-flow__edge-text {
+  fill: var(--text-primary);
+  font-weight: 700;
+}
+
+.canvas-wrapper .react-flow__edge-textbg {
+  fill: var(--surface-1);
+}
+
+.canvas-controls.react-flow__controls {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.canvas-controls.react-flow__controls button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.canvas-controls.react-flow__controls button:hover {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+
+.canvas-controls.react-flow__controls button svg {
+  fill: currentColor;
+}
+
+.canvas-minimap.react-flow__minimap {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.canvas-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  gap: 12px;
+}
+
+.canvas-empty__icon {
+  font-size: 2.6rem;
+  color: var(--text-muted);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+.canvas-empty__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.canvas-empty__sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+  text-align: center;
+  max-width: 320px;
+  line-height: 1.5;
+}
