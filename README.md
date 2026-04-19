@@ -1,10 +1,21 @@
 # FlowForge HR - Visual Workflow Designer
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge&logo=vercel)](https://flowforge-hr.vercel.app/)
 ![React](https://img.shields.io/badge/React-19-blue?logo=react)
 ![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite)
 ![Zustand](https://img.shields.io/badge/Zustand-5.0-orange?logo=react)
 ![Theme](https://img.shields.io/badge/Theme-Dark%2FLight-success)
 ![Validation](https://img.shields.io/badge/Validation-DAG-red)
+
+---
+
+## 🔗 Live Demo
+
+👉 https://flowforge-hr.vercel.app/
+
+> Try switching between **Dark and Light mode** from the UI
+
+---
 
 
 FlowForge HR is a production-grade, modular, and interactive visual builder designed for HR administrators to design, configure, and simulate complex workflows such as employee onboarding, approval processes, and automated notifications.
@@ -15,19 +26,18 @@ Built with performance and scalability in mind, it provides a seamless 3-column 
 
 ## 📸 Visual Overview
 
-> [!TIP]
-> **Insert Main Hero Screenshot Here**
-> *Capture the full application layout in Dark Mode with a sample workflow active.*
+<img width="1919" height="955" alt="image" src="https://github.com/user-attachments/assets/1f2dbe67-8473-4267-849a-8e31268f26aa" />
+
 
 ### Key Interface Areas
 
-| Feature | Screenshot Location Recommendation |
-| :--- | :--- |
-| **Theme Engine** | *Shot of the application in Light Mode showing the clean, professional contrast.* |
-| **Workflow Canvas** | *Shot of the central React Flow workspace with custom nodes.* |
-| **Property Inspector** | *Shot of the right-hand panel editing a "Task" or "Decision" node.* |
-| **Validation Engine** | *Shot of the TopBar's "Run" or "Validate" button showing the validation pulse/error list.* |
-| **Sandbox Mode** | *Shot of the simulation modal running through a workflow trace.* |
+| Feature | Description |
+|--------|------------|
+| **Theme Engine** | Toggle between Dark and Light modes using CSS variables |
+| **Workflow Canvas** | Drag-and-drop workflow builder powered by React Flow |
+| **Property Inspector** | Real-time node editing using dynamic forms |
+| **Validation Engine** | Ensures DAG constraints (no cycles, valid flow) |
+| **Sandbox Mode** | Simulates workflow execution step-by-step |*Sandbox Mode** | *Shot of the simulation modal running through a workflow trace.* |
 
 ---
 
@@ -186,4 +196,6 @@ The engine automatically validates your design against these rules to prevent ru
 
 ---
 
-High-performance software for high-performance teams.
+**📄 License**
+
+MIT
