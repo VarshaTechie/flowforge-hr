@@ -13,8 +13,6 @@
 
 👉 https://flowforge-hr.vercel.app/
 
-> Try switching between **Dark and Light mode** from the UI
-
 ---
 
 
