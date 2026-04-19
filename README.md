@@ -1,122 +1,189 @@
-# FlowForge HR: Workflow Designer Prototype
+# FlowForge HR - Visual Workflow Designer
 
-Mini HR Workflow Designer built with React + React Flow for designing and testing onboarding, leave approval, and document workflows.
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?logo=vite)
+![Zustand](https://img.shields.io/badge/Zustand-5.0-orange?logo=react)
+![Theme](https://img.shields.io/badge/Theme-Dark%2FLight-success)
+![Validation](https://img.shields.io/badge/Validation-DAG-red)
 
-## 1. Run the Project
 
-```bash
-npm install
-npm run dev
-```
+FlowForge HR is a production-grade, modular, and interactive visual builder designed for HR administrators to design, configure, and simulate complex workflows such as employee onboarding, approval processes, and automated notifications.
 
-Production build:
+Built with performance and scalability in mind, it provides a seamless 3-column UI experience inspired by modern design tools.
 
-```bash
-npm run build
-```
+---
 
-## 2. Scope Coverage Against Assignment
+## 📸 Visual Overview
 
-- React app using Vite.
-- React Flow canvas with custom nodes:
-  - Start
-  - Task
-  - Approval
-  - Automated Step
-  - End
-- Drag nodes from sidebar, connect edges, select/edit node, delete nodes/edges.
-- Node inspector with dedicated form per node type.
-- Mock API layer:
-  - `GET /automations` via `getAutomations()`
-  - `POST /simulate` via `simulateWorkflow(workflowJson)`
-- Workflow sandbox:
-  - Serializes current graph
-  - Runs simulation against mock API
-  - Renders step-by-step execution log
-  - Runs structural validation before simulate (missing links, cycle detection, Start/End constraints)
+> [!TIP]
+> **Insert Main Hero Screenshot Here**
+> *Capture the full application layout in Dark Mode with a sample workflow active.*
 
-## 3. Architecture
+### Key Interface Areas
+
+| Feature | Screenshot Location Recommendation |
+| :--- | :--- |
+| **Theme Engine** | *Shot of the application in Light Mode showing the clean, professional contrast.* |
+| **Workflow Canvas** | *Shot of the central React Flow workspace with custom nodes.* |
+| **Property Inspector** | *Shot of the right-hand panel editing a "Task" or "Decision" node.* |
+| **Validation Engine** | *Shot of the TopBar's "Run" or "Validate" button showing the validation pulse/error list.* |
+| **Sandbox Mode** | *Shot of the simulation modal running through a workflow trace.* |
+
+---
+
+## 🏗️ Architecture
+
+FlowForge HR follows a modern, decoupled architecture centered around a central state container and a high-performance visual engine.
+
+### Tech Stack
+- **Framework**: [React 19](https://react.dev/) (Vite-powered for lightning-fast HMR)
+- **Visual Engine**: [@xyflow/react](https://reactflow.dev/) (React Flow) for orchestrating the node-edge canvas.
+- **State Management**: [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction) for lightweight, high-performance global state (Workflow, History, Theme).
+- **Forms**: [React Hook Form](https://react-hook-form.com/) for typed, high-performance property editing.
+- **Styling**: Vanilla CSS with a customized Design System of CSS variables for instant theme switching.
+
+### State Flow
+1. **Zustand Store**: The "Source of Truth" holding the node/edge array and configuration data.
+2. **React Flow**: Consumes the store to render the visual graph.
+3. **Inspector**: Synchronizes bi-directionally with the store to allow real-time attribute editing.
+4. **Validation Layer**: A custom utility within the store that performs Graph Traversal (DFS) to ensure logical integrity.
+
+---
+
+## 📂 Project Structure
 
 ```text
-src/
-  api/
-    mockApi.js
-  components/
-    canvas/
-    inspector/
-    nodes/
-    sandbox/
-    sidebar/
-    topbar/
-  constants/
-    workflowTemplates.js
-  hooks/
-    useAutomations.js
-    useHistoryShortcuts.js
-    useThemeSync.js
-  store/
-    workflowStore.js
-  types/
-    index.js
-    workflow.types.js
+flowforge-hr/
+├── public/              # Static assets (logos, icons)
+├── src/
+│   ├── api/             # Mock API simulation layer (simulates backend responses)
+│   ├── components/
+│   │   ├── canvas/      # The primary React Flow workspace wrapper
+│   │   ├── inspector/   # Property Editor (The Right Column)
+│   │   ├── nodes/       # Custom Node implementations (Task, Decision, etc.)
+│   │   ├── sandbox/     # Workflow Simulation/Step-through engine
+│   │   ├── sidebar/     # Drag-and-drop Node Library (The Left Column)
+│   │   └── topbar/      # Global Actions (Undo/Redo, Theme, Export)
+│   ├── constants/       # Configuration, default data, and Workflow Templates
+│   ├── hooks/           # Custom React hooks (Keyboard shortcuts, Theme sync)
+│   ├── store/           # Zustand store (workflowStore.js) - The brain of the app
+│   ├── types/           # Core data structures and interface definitions
+│   ├── App.jsx          # Root layout and component orchestration
+│   ├── App.css          # Layout-specific styling
+│   ├── index.css        # Global CSS variables, Dark Mode tokens, and Typography
+│   └── main.jsx         # Application entry point
+├── package.json         # Dependency manifest and scripts
+└── README.md            # Implementation Documentation
 ```
 
-### Key Design Choices
+---
 
-- `workflowStore` (Zustand) is the single source of truth for nodes, edges, selection, validation, and history.
-- Canvas logic, forms, API logic, and simulation UI are separated by feature folders.
-- Node forms use controlled form state through `react-hook-form`.
-- Automated Step form parameters are rendered dynamically from automation metadata.
-- Reusable hooks handle cross-cutting concerns:
-  - `useAutomations`
-  - `useHistoryShortcuts`
-  - `useThemeSync`
+## 🚀 How to Run
 
-## 4. Node Configuration
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-- Start Node
-  - Start title
-  - Optional metadata key-value pairs
-- Task Node
-  - Title (required)
-  - Description
-  - Assignee
-  - Due date
-  - Optional custom key-value fields
-- Approval Node
-  - Title
-  - Approver role (`Manager`, `HRBP`, `Director`)
-  - Auto-approve threshold (number)
-- Automated Step Node
-  - Title
-  - Action (`send_email`, `generate_doc`)
-  - Dynamic action parameters from mock API definition
-- End Node
-  - End message
-  - Summary flag (boolean)
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd flowforge-hr
+   ```
 
-## 5. Validation Rules
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Implemented in `validateWorkflow()`:
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-- At least one Start and one End node exist
-- Start has no incoming edges
-- End has no outgoing edges
-- Non-terminal nodes are connected
-- No cycles in graph (DFS coloring)
+> [!NOTE]
+> Once started, the application will be available at: **[http://localhost:5173/](http://localhost:5173/)**
 
-## 6. Type Safety Notes
 
-- Workflow interfaces are explicitly documented in `src/types/workflow.types.js`:
-  - Node kinds
-  - Node data contracts
-  - Edge contract
-  - Serialized workflow shape
-- Shared workflow constants are centralized in `src/types/index.js`.
+---
 
-## 7. Assumptions
+## 🎨 Design Decisions
 
-- Prototype is front-end only (no auth/backend persistence).
-- Mock API simulates network latency and execution responses.
-- Approval flow is a single linear path (no branching cross-path logic in this version).
+### 1. The 3-Column "Designer" Pattern
+FlowForge HR adopts the industry-standard "Sidebar - Canvas - Inspector" layout.
+- **Left Sidebar**: Keeps the canvas clean by housing all "parts" elsewhere.
+- **Central Canvas**: Focuses the user's attention on the workflow logic.
+- **Right Inspector**: Provides focused, contextual editing without interrupting the flow logic.
 
+### 2. Directed Acyclic Graph (DAG) Enforcement
+HR workflows typically require a logical progression. To ensure this:
+- **Cycle Detection**: The system implements a Depth-First Search (DFS) algorithm to detect and block infinite loops.
+- **Connectivity Validation**: The engine checks that every node is reachable from "Start" and eventually leads to an "End".
+
+### 3. Snapshot-Based Undo/Redo
+Instead of complex command-pattern diffs, a Snapshot History is implemented in Zustand. This ensures that even complex property changes are perfectly restored without side effects. It is currently capped at **75 steps** to balance memory and capability.
+
+### 4. CSS Variable Design System
+To support Dark/Light mode efficiently, the entire UI is built on top of a "semantic" palette (e.g., `--bg-primary`, `--accent-indigo`). Switching themes is a simple data-attribute toggle on the root element.
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+Power users can navigate the designer more efficiently with these built-in shortcuts:
+
+| Action | Shortcut |
+| :--- | :--- |
+| **Undo** | `Ctrl` / `Cmd` + `Z` |
+| **Redo** | `Ctrl` / `Cmd` + `Shift` + `Z` |
+| **Delete Node/Edge** | `Backspace` / `Delete` |
+| **Select All** | `Ctrl` / `Cmd` + `A` |
+
+---
+
+## 🧩 Node Library Reference
+
+FlowForge HR provides a set of specialized nodes tailored for HR logic:
+
+| Icon | Name | Description |
+| :--- | :--- | :--- |
+| ▶ | **Start** | The entry point of the workflow. Only one allowed per design. |
+| ✓ | **Task** | Assigns a manual task (e.g., "Sign Contract") to an employee. |
+| ✦ | **Approval** | Pauses the flow until a Manager or HRBP explicitly approves. |
+| ⚡ | **Automated** | Triggers background actions like email notifications or system API calls. |
+| ■ | **End** | Marks the completion of the workflow path. |
+
+---
+
+## 🛡️ Logical Validation Rules
+
+The engine automatically validates your design against these rules to prevent runtime failures:
+
+1. **Cycle Detection**: No infinite loops are allowed. The graph must be a Directed Acyclic Graph (DAG).
+2. **Connectivity**: Every node must be reachable from the "Start" node.
+3. **No Dead Ends**: Every path (except those leading to "End") must have a valid outgoing connection.
+4. **Single Root**: Only one "Start" node can exist to ensure a clear entry point.
+
+---
+
+## ✅ Completed vs. 🛠️ Future Roadmap
+
+### What's Completed
+- [x] **Full Drag-and-Drop Canvas**: Build workflows from scratch using custom node types.
+- [x] **Universal Validation**: Real-time checking for orphaned nodes, multiple starts, and logical cycles.
+- [x] **Theme Engine**: Seamless toggle between Premium Dark Mode and crisp Light Mode.
+- [x] **Template Engine**: One-click application of standard HR workflows (Onboarding, Performance Review).
+- [x] **Local Persistence**: Workflows are automatically saved to `localStorage`.
+- [x] **JSON Export/Import**: Download your workflow designs as portable files.
+- [x] **Visual Polish**: Premium dark mode, micro-animations, and sleek typography.
+
+### Future Roadmap (If given more time)
+- [ ] **Backend Integration**: Replace `localStorage` with a robust SQL/NoSQL database and user authentication.
+- [ ] **Collaboration Engine**: Real-time collaborative editing using WebSockets or CRDTs.
+- [ ] **Version Control**: A "Save Version" feature to track workflow changes over time with a diff viewer.
+- [ ] **Parallel Logic**: Support for "Join" and "Split" nodes to handle complex parallel approval paths.
+- [ ] **Third-Party Integrations**: Direct integration nodes for Slack, Gmail, or Jira (using real OAuth).
+
+---
+
+High-performance software for high-performance teams.
